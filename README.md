@@ -10,6 +10,7 @@ This is a list of the top headlines from the world news. The news is updated eve
 
 ### Links
 - GitHub: https://github.com/mrhrifat/world-news.git <br>
+
 **Note:** This is a personal project. I am not affiliated with NewsApi. I am just using their API. I am not responsible for any of the content. I don't claim any rights to the content. The content won't be shown in the production version.
 
 ### How It Works
