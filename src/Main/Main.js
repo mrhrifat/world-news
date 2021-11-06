@@ -47,8 +47,8 @@ export default class serverNews {
         if (this._pageSize) {
             url += `&pageSize=${this._pageSize}`
         }
-        if (this._page) {
-            url += `&page=${this._page}`
+        if (this._currentPage) {
+            url += `&page=${this._currentPage}`
         }
         return url
     }
@@ -70,7 +70,9 @@ export default class serverNews {
                 totalPages: this._totalPages,
                 currentPage: this._currentPage,
                 country: this._country,
-                category: this._category
+                category: this._category,
+                isNext: this._isNext(),
+                isPrev: this._isPrev()
             }
 
 
@@ -103,5 +105,38 @@ export default class serverNews {
         this._search = ''
         return this.getNews()
     }
+
+    _isPrev() {
+        return this._currentPage > 1
+    }
+
+    _isNext() {
+        return this._currentPage < this._totalPages
+    }
+
+    nextPage() {
+        if (this._isNext()) {
+            this._currentPage++
+            return this.getNews()
+        }
+        return null
+    }
+
+    prevPage() {
+        if (this._isPrev) {
+            this._currentPage--
+            return this.getNews()
+        }
+        return null
+    }
+
+    setCurrentPage(page) {
+        if (page > 0 && page < this._totalPages) {
+            this._currentPage = page
+            return this.getNews()
+        }
+        return null
+    }
+
 }
 // console.log(`${process.env.REACT_APP_URL}${process.env.REACT_APP_API_KEY}`)
