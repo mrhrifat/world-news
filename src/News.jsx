@@ -110,13 +110,72 @@ class News extends Component {
             })
     }
 
+    next = () => {
+        if (this.state.data.isNext) {
+            this.setState({ isLoading: true })
+        }
+
+        news.nextPage()
+            .then(data => {
+                this.setState({
+                    data,
+                    isLoading: false
+                })
+            })
+            .catch(err => {
+                throw new Error(err)
+            })
+    }
+
+    prev = () => {
+        if (this.state.data.isPrev) {
+            this.setState({ isLoading: true })
+        }
+
+
+        news.prevPage()
+            .then(data => {
+                this.setState({
+                    data,
+                    isLoading: false
+                })
+            }).catch(err => {
+                throw new Error(err)
+            })
+    }
+
+    handlePageChange = value => {
+        this.setState({
+            data: {
+                ...this.state.data,
+                currentPage: Number.parseInt(value)
+            }
+        })
+    }
+
+    goToPage = () => {
+        this.setState({
+            isLoading: true
+        })
+        news.setCurrentPage(this.state.data.currentPage)
+            .then(data => {
+                this.setState({
+                    data,
+                    isLoading: false
+                })
+            })
+            .catch(err => {
+                throw new Error(err)
+            })
+
+    }
 
 
     render() {
-        const { data: { articles, totalResults, totalPages, currentPage, country, category }, isLoading } = this.state
+        const { data: { articles, totalResults, totalPages, currentPage, country, category, isPrev, isNext }, isLoading } = this.state
 
         return (
-            <div className='container'>
+            <div className='container w-75'>
                 {/* {console.log(this.state.data)} */}
 
                 <Header
@@ -138,11 +197,22 @@ class News extends Component {
                         />
 
                         <NewsList news={articles} />
+
+                        <Paggination
+                            isPrev={isPrev}
+                            prev={this.prev}
+                            isNext={isNext}
+                            next={this.next}
+                            totalPages={totalPages}
+                            currentPage={currentPage}
+                            handlePageChange={this.handlePageChange}
+                            goToPage={this.goToPage}
+                        />
                     </div>
                 }
 
 
-                <Paggination />
+
 
                 {/* <NewsList news={fakenews} /> */}
                 {/* <Loading /> */}
