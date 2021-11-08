@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
+
+// Get date from Date Constructor
 const publishedTime = date => {
     const d = new Date(date)
     // return d.toLocaleString()
     return d.toDateString()
 }
 
+//NewsCard Component
+// Making card for each news
 const NewsCard = ({ item }) => {
     return (
         <div className='card mb-4'>
@@ -52,8 +57,12 @@ const NewsCard = ({ item }) => {
     )
 }
 
+//NewsList Component
+// Map through the list of articles and return a NewsCard for each
 class NewsList extends Component {
     render() {
+
+        //Distruct the props from parent 
         const { news } = this.props
         return (
             <div>
@@ -62,6 +71,8 @@ class NewsList extends Component {
                 {/* {console.log(news)} */}
 
                 {news && news.length === 0 && <h6>'There is no news today'</h6>}
+
+                {/* Map articles array and return a NewsCard for each */}
                 {news && news.map(item =>
                     <NewsCard
                         key={item.title}
@@ -73,7 +84,18 @@ class NewsList extends Component {
     }
 }
 
+//PropTypes for NewsList
+NewsList.propTypes={
+    news:PropTypes.array.isRequired
+}
 
+//PropTypes for NewsCard
+NewsCard.propTypes={
+    item:PropTypes.object.isRequired
+}
+
+
+// Functional Component
 // const NewsList = ({ news }) => {
 //     return (
 //         <div>
