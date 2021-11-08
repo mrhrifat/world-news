@@ -7,19 +7,24 @@ class Header extends Component {
         initialText: ''
     }
 
+    //Handle change in search bar
     handleChange = e => {
         this.setState({
             initialText: e.target.value
         })
     }
 
+    //Handle key press in search bar
     handleKeyPress = e => {
         if (e.key === 'Enter') {
+            // console.log(this.state.initialText)
+            // Send value and get from server
             this.props.handleSearch(this.state.initialText)
         }
     }
 
     render() {
+        // Distruct props from parent
         const { startPoint, category, handleChangeCategory } = this.props
         return (
             <div className='my-3'>
@@ -42,7 +47,10 @@ class Header extends Component {
                     <input
                         type="search" name=""
                         className='form-control w-50'
+                        placeholder='Search'
+                        //Handle type change in search bar and send value to state
                         onChange={this.handleChange}
+                        // Handle key press in search bar and send value to main component
                         onKeyPress={this.handleKeyPress}
                         value={this.state.initialText}
                     />
@@ -51,8 +59,11 @@ class Header extends Component {
 
                 {/* Category */}
                 <div className='my-3'>
+
                     {
                         // console.log(newsCategory)
+
+                        //Map through the category and display them
                         newsCategory && Object.keys(newsCategory).map(item => {
                             return (
                                 <button
@@ -61,10 +72,12 @@ class Header extends Component {
                                         'btn btn-outline-secondary btn-sm m-1'}
                                     key={newsCategory[item]}
                                     onClick={
+                                        // Change category 
                                         () => handleChangeCategory(newsCategory[item])
                                     }
 
                                 >
+                                    {/* Show category name */}
                                     {newsCategory[item]}
                                 </button>
                             )
@@ -74,6 +87,14 @@ class Header extends Component {
             </div >
         )
     }
+}
+
+//PropTypes
+Header.propTypes = {
+    startPoint: PropTypes.func.isRequired,
+    category: PropTypes.string, // It's not required beacuse it will be change oncategory button change
+    handleChangeCategory: PropTypes.func.isRequired,
+    handleSearch: PropTypes.func.isRequired
 }
 
 
