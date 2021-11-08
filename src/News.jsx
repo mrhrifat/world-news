@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
-import serverNews, { newsCategory, country } from './Main/Main'
+import PropTypes from 'prop-types'
+import serverNews, { newsCategory, newsCountry } from './Main/Main'
 import Header from './Components/Header'
 import Result from './Components/Result'
 import NewsList from './Components/NewsList'
 import Paggination from './Components/Paggination'
 import Loading from './Components/Loading'
+import Country from './Components/Country'
 
+// For make card if server is down or missing
 // const fakenews = [
 //     {
 //         "source": {
@@ -35,8 +38,10 @@ import Loading from './Components/Loading'
 //     }
 // ]
 
-const news = new serverNews(country.us, newsCategory.technology,)
+// Create new news object instance and send 2 default value to server through main
+const news = new serverNews(newsCountry.us, newsCategory.technology,)
 
+// News Class Component
 class News extends Component {
 
     // componentDidMount() {
@@ -50,12 +55,16 @@ class News extends Component {
     //         })
     // }
 
+    // State to keep returned data and control Loading comonents
     state = {
         data: {},
         isLoading: true
     }
 
+    // Handle with server and render for asynchronous behaviours 
     componentDidMount() {
+
+        //First request on server 
         news.getNews()
             .then(data => {
                 this.setState({
@@ -68,6 +77,7 @@ class News extends Component {
             })
     }
 
+    // Reset all condition and go to homepage
     startPoint = () => {
         this.setState({ isLoading: true })
         news.homepage()
@@ -82,6 +92,7 @@ class News extends Component {
             })
     }
 
+    // Change category one to another
     handleChangeCategory = category => {
         this.setState({ isLoading: true })
         news.changeCategory(category)
@@ -96,6 +107,34 @@ class News extends Component {
             })
     }
 
+    // Get value from country event change and set it to this state
+    handleCountry = value => {
+        this.setState(
+            {
+                data: {
+                    ...this.state.data,
+                    country: value
+                }
+            })
+    }
+
+    // Send to server with state country onClick
+    handleChangeCountry = () => {
+        this.setState({ isLoading: true })
+        news.changeCountry(this.state.data.country)
+            .then(data => {
+                this.setState({
+                    data,
+                    isLoading: false
+                })
+            })
+            .catch(err => {
+                throw new Error(err)
+            })
+    }
+    
+
+    // Search query on server
     handleSearch = initialText => {
         this.setState({ isLoading: true })
         news.search(initialText)
@@ -110,6 +149,7 @@ class News extends Component {
             })
     }
 
+    // Go to next page
     next = () => {
         if (this.state.data.isNext) {
             this.setState({ isLoading: true })
@@ -127,6 +167,7 @@ class News extends Component {
             })
     }
 
+    // Return to previous page
     prev = () => {
         if (this.state.data.isPrev) {
             this.setState({ isLoading: true })
@@ -144,6 +185,7 @@ class News extends Component {
             })
     }
 
+    // Get value on event change and set it to this state
     handlePageChange = value => {
         this.setState({
             data: {
@@ -153,6 +195,7 @@ class News extends Component {
         })
     }
 
+    // Send to server with jump to any page onClick
     goToPage = () => {
         this.setState({
             isLoading: true
@@ -172,12 +215,15 @@ class News extends Component {
 
 
     render() {
+        // Distruct this state data
         const { data: { articles, totalResults, totalPages, currentPage, country, category, isPrev, isNext }, isLoading } = this.state
+        // console.log(this.state.data.country)
 
         return (
-            <div className='container w-75'>
+            <div className='container w-50'>
                 {/* {console.log(this.state.data)} */}
 
+                {/* Header Component */}
                 <Header
                     startPoint={this.startPoint}
                     category={category}
@@ -185,19 +231,33 @@ class News extends Component {
                     handleSearch={this.handleSearch}
                 />
 
+                {/* Country Component */}
+                <Country
+                    country={country}
+                    handleChangeCountry={this.handleChangeCountry}
+                    handleCountry={this.handleCountry}
+                />
+
+                {/* Visible only if request is done and isLoading is false */}
                 {(isLoading)
                     ?
-                    <Loading />
+
+                    // Loading Component 
+                    <Loading/>
                     :
                     <div>
+
+                        {/* Result Component */}
                         <Result
                             totalResults={totalResults}
                             currentPage={currentPage}
                             totalPages={totalPages}
                         />
 
+                        {/* NewsList Component */}
                         <NewsList news={articles} />
 
+                        {/* Paggination Component */}
                         <Paggination
                             isPrev={isPrev}
                             prev={this.prev}
@@ -221,5 +281,57 @@ class News extends Component {
         )
     }
 }
+
+//Props Validation
+News.propTypes={
+    news: PropTypes.object,
+    isLoading: PropTypes.bool,
+    data: PropTypes.object,
+    handleCountry: PropTypes.func,
+    handleChangeCountry: PropTypes.func,
+    handleChangeCategory: PropTypes.func,
+    handleSearch: PropTypes.func,
+    handlePageChange: PropTypes.func,
+    goToPage: PropTypes.func,
+    startPoint: PropTypes.func,
+    next: PropTypes.func,
+    prev: PropTypes.func,
+}
+
+Header.propTypes={
+    startPoint: PropTypes.func,
+    category: PropTypes.string,
+    handleChangeCategory: PropTypes.func,
+    handleSearch: PropTypes.func,
+}
+
+Country.propTypes={
+    country: PropTypes.string,
+    handleCountry: PropTypes.func,
+    handleChangeCountry: PropTypes.func,
+}
+
+Result.propTypes={
+    totalResults: PropTypes.number,
+    currentPage: PropTypes.number,
+    totalPages: PropTypes.number,
+}
+
+NewsList.propTypes={
+    news: PropTypes.array,
+}
+
+Paggination.propTypes={
+    isPrev: PropTypes.bool,
+    prev: PropTypes.func,
+    isNext: PropTypes.bool,
+    next: PropTypes.func,
+    totalPages: PropTypes.number,
+    currentPage: PropTypes.number,
+    handlePageChange: PropTypes.func,
+    goToPage: PropTypes.func,
+}
+
+
 
 export default News
