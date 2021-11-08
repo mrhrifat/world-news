@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { newsCountry } from '../Main/Main'
+import PropTypes from 'prop-types'
 
+//Get country code to country name ES6 API
 let regionNames = new Intl.DisplayNames(['en'], { type: 'region' })
 // console.log(regionNames.of('ae'))
 
@@ -10,6 +12,7 @@ class Country extends Component {
 
 
     render() {
+        // Props from parent
         const { country, handleChangeCountry, handleCountry } = this.props
         return (
             <div>
@@ -26,10 +29,14 @@ class Country extends Component {
                                 name='country'
                                 className='form-control form-control-sm border-success'
                                 value={country}
+
+                                //Change select option
                                 onChange={e => {
                                     handleCountry(e.target.value)
                                     // handleChangeCountry()
                                 }}
+
+                                //Send request on parent to get update
                                 onClick={
                                     () => {
                                         handleChangeCountry()
@@ -49,6 +56,7 @@ class Country extends Component {
                                             >
 
                                                 {
+                                                    //Change country code to country name
                                                     regionNames.of(newsCountry[item].toUpperCase())
                                                     // newsCountry[item]
                                                     // regionNames.of(item.toUpperCase())
@@ -64,6 +72,12 @@ class Country extends Component {
             </div >
         )
     }
+}
+
+Country.propTypes = {
+    country: PropTypes.string,
+    handleChangeCountry: PropTypes.func.isRequired,
+    handleCountry: PropTypes.func.isRequired
 }
 
 export default Country
