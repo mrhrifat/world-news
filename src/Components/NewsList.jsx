@@ -27,6 +27,11 @@ const NewsCard = ({ item }) => {
                     href={item.url}
                     target='_blank'
                     rel='noopener noreferrer'
+                    style={{
+                        textDecoration: 'none',
+                        color: '#111',
+                        fontFamily: 'Dosis', 'sans-serif':true,
+                    }}
                 >
                     <h5>{item.title}</h5>
                 </a>
@@ -35,6 +40,11 @@ const NewsCard = ({ item }) => {
                     href={item.url}
                     target='_blank'
                     rel='noopener noreferrer'
+                    style={{
+                        textDecoration: 'none',
+                        color: '#111',
+                        fontFamily: 'Quicksand', 'sans-serif': true,
+                    }}
                 >
                     <p>{item.description}</p>
                 </a>
@@ -42,11 +52,15 @@ const NewsCard = ({ item }) => {
 
             <div className="card-footer d-flex align-item-center justify-content-between">
 
-                <small>
+                <small
+                style={{
+                    fontFamily: 'Ubuntu', 'sans-serif': true,
+                }}
+                >
                     Published at {publishedTime(item.publishedAt)}
                 </small>
 
-                <small>
+                <small className='bg-success rounded text-light p-1'>
                     <span>
                         {item.source.name}
                     </span>
@@ -85,13 +99,13 @@ class NewsList extends Component {
 }
 
 //PropTypes for NewsList
-NewsList.propTypes={
-    news:PropTypes.array.isRequired
+NewsList.propTypes = {
+    news: PropTypes.array.isRequired
 }
 
 //PropTypes for NewsCard
-NewsCard.propTypes={
-    item:PropTypes.object.isRequired
+NewsCard.propTypes = {
+    item: PropTypes.object.isRequired
 }
 
 
