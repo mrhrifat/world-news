@@ -33,11 +33,14 @@ class Header extends Component {
                 <div className="d-flex align-items-cetner justify-content-between">
                     <h3
                         style={{
-                            cursor: 'pointer'
+                            cursor: 'pointer',
+                            fontFamily: 'Quicksand', 'sans-serif': true,
+                            fontWeight: 'bold',
                         }}
                         onClick={startPoint}
                     >
-                        <span className='text-success'>
+                        <span
+                            className='text-success mx-1'>
                             World
                         </span>
                         News
@@ -53,6 +56,9 @@ class Header extends Component {
                         // Handle key press in search bar and send value to main component
                         onKeyPress={this.handleKeyPress}
                         value={this.state.initialText}
+                        style={{
+                            fontFamily: 'Ubuntu', 'sans-serif': true,
+                        }}
                     />
                     {/* {console.log(this.state.initialText)} */}
                 </div>
@@ -68,8 +74,12 @@ class Header extends Component {
                             return (
                                 <button
                                     className={category === newsCategory[item] ?
-                                        'btn btn-outline-success btn-sm btn-active m-1' :
-                                        'btn btn-outline-secondary btn-sm m-1'}
+                                        'btn btn-success btn-sm btn-active m-1' :
+                                        'btn btn-secondary btn-sm m-1'
+                                    }
+                                    style={{
+                                        fontFamily: 'Ubuntu', 'sans-serif': true,
+                                    }}
                                     key={newsCategory[item]}
                                     onClick={
                                         // Change category 
