@@ -24,6 +24,9 @@ class Paggination extends Component {
                     onClick={() => {
                         prev()
                     }}
+                    style={{
+                        fontFamily: 'Ubuntu', 'sans-serif': true,
+                    }}
                 >
                     Prev
                 </button>
@@ -73,6 +76,9 @@ class Paggination extends Component {
                     className="btn btn-outline-success btn-sm"
                     disabled={!isNext}
                     onClick={() => { next() }}
+                    style={{
+                        fontFamily: 'Ubuntu', 'sans-serif': true,
+                    }}
                 >
                     Next
                 </button>
