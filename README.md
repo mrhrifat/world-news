@@ -38,13 +38,12 @@ This is a list of the top headlines from the world news. The news is updated eve
 
 ### How to Contribute
 1. Fork the project.
-2. Create a new branch.
-3. Make your changes.
-4. Commit your changes.
-5. Push your changes.
-6. Open an issue or create a pull request.
-7. Wait for the pull request to be merged.
-8. Enjoy the news.
+2. Make your changes.
+3. Commit your changes.
+4. Push your changes.
+5. Open an issue or create a pull request.
+6. Wait for the pull request to be merged.
+
 
 ### Author
 | [<img src="https://github.com/mrhrifat.png?size=180" width=180><br><sub>@mrhrifat</sub>](https://github.com/mrhrifat) |
