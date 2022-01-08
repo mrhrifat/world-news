@@ -19,4 +19,17 @@ World News is a simple application that show a list of the top headlines from th
 
 **Note:** This project isn't available on server. To use in local follow [this](#how-to-use)
 
+## How To Use
+1. Download the [repository](https://github.com/mrhrifat/world-news).
+2. Extract directory.
+3. Open directory with IDE.
+4. Open Terminal.
+5. Run with
+```
+npm start
+```
+6. Enjoy
+
+**Note:** If you get any error while running this project, please create an Issue.
+
 
